@@ -7,11 +7,11 @@ use SnakeGame::Renderer;
 use SnakeGame::Snake;
 use SnakeGame::Food;
 
-constant W = 500;
-constant H = 500;
+constant W = 700;
+constant H = 700;
 
 class SnakeGame {
-  has Int $.level = 4;
+  has Int $.level = 10;
   has Int $.width;
   has Int $.height;
 	has SDL_Rect @!borders;
@@ -144,7 +144,7 @@ class SnakeGame {
 	}
 
 	method !render-food () {
-		$!renderer.draw-color($!food.color.r, $!food.color.g, $!food.color.b, $!food.color.a);
+		$!renderer.draw-color(255.rand.Int, 255.rand.Int , 255.rand.Int , 255.rand.Int);
 		$!renderer.fill-rect($!food.rect);
 	}
 

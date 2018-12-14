@@ -27,9 +27,9 @@ class SnakeGame::Snake {
 	has SDL_Color $!color;
 
   submethod BUILD () {
-		my $head = Piece.new: rect => SDL_Rect.new(:x(100.rand.Int), :y(100.rand.Int), :w(7), :h(7));
-		my $body = Piece.new: rect => SDL_Rect.new(:x(100.rand.Int), :y(100.rand.Int), :w(7), :h(7));
-		my $tail = Piece.new: rect => SDL_Rect.new(:x(100.rand.Int), :y(100.rand.Int), :w(7), :h(7));
+		my $head = Piece.new: rect => SDL_Rect.new(:x(700.rand.Int), :y(700.rand.Int), :w(7), :h(7));
+		my $body = Piece.new: rect => SDL_Rect.new(:x(700.rand.Int), :y(700.rand.Int), :w(7), :h(7));
+		my $tail = Piece.new: rect => SDL_Rect.new(:x(700.rand.Int), :y(700.rand.Int), :w(7), :h(7));
     $head.next = Nil;
 		$head.prev = $body;
 		$body.next = $head;
