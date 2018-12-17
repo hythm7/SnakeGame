@@ -22,7 +22,7 @@ class SnakeGame {
 	has $!renderer;
 	has $!window;
 
-	has SnakeGame::Food  $!food;
+	has SnakeGame::Food  @!food;
 	has SnakeGame::Snake $!snake;
 
   submethod BUILD (
@@ -47,7 +47,8 @@ class SnakeGame {
 
 
 		$!snake = SnakeGame::Snake.new();
-		$!food = SnakeGame::Food.new();
+		@!food.push: SnakeGame::Food.new() for ^4;
+		say @!food;
   }
 
   enum GAMEKEYS (
@@ -103,9 +104,11 @@ class SnakeGame {
 	  
     $!snake.move(:$snakedir);
 
-		if SDL_HasIntersection($!snake.head.rect, $!food.rect) {
-		  $!snake.nom(:$!food);
-		  $!food .= new;	
+    for @!food -> $food {
+			if SDL_HasIntersection($!snake.head.rect, $food.rect) {
+				$!snake.nom(:$food);
+			  @!food .= grep: * ne $food;
+			}
 		}
 
 		$!level += 1 if $!snake.length %% 7;
@@ -144,8 +147,10 @@ class SnakeGame {
 	}
 
 	method !render-food () {
-		$!renderer.draw-color(255.rand.Int, 255.rand.Int , 255.rand.Int , 255.rand.Int);
-		$!renderer.fill-rect($!food.rect);
+	  for @!food -> $food {
+			$!renderer.draw-color((0...255).pick, (0...255).pick , (0...255).pick , (0...255).pick);
+			$!renderer.fill-rect($food.rect);
+		}
 	}
 
 	method !render-snake () {
